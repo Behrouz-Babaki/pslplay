@@ -1,0 +1,118 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{a4wide}
+\usepackage{parskip}
+\setlength{\parindent}{10pt}
+\linespread{1.2}
+
+
+\title{A note on converting a PSL MPE inference problem to a Linear Program \vspace{-2ex} }
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Consider the following rules:
+
+\begin{align*}
+0.3 : \text{\emph{friends}} (B,A) \land \text{\emph{votesFor}}(A,P) \to \text{\emph{votesFor}}(B,P) \\
+0.8 : \text{\emph{spouse}} (B,A) \land \text{\emph{votesFor}}(A,P) \to \text{\emph{votesFor}}(B,P) 
+\end{align*}
+
+Let us assume that there are only six entities in our world, namely $\{\text{\textbf{Nelson}}$, $\text{\textbf{Sara}}$, $\text{\textbf{Jesse}}$, $\text{\textbf{Celine}}$, 
+$\text{\textbf{Barack}}$, $\text{\textbf{Mitt}}\}$. Grounding the predicates $\text{\emph{friends}}(B,A)$, $\text{\emph{spouse}}(B,A)$ and $\text{\emph{votesFor}}(B,P)$ using these entities gives us the a set of ground atoms:
+
+\begin{center}
+\begin{tabular}{|lll|}
+\hline
+\emph{friends}(\textbf{Nelson}, \textbf{Sara}) & \emph{friends}(\textbf{Nelson}, \textbf{Jesse}) & \emph{friends}(\textbf{Nelson}, \textbf{Sara}) \\
+\emph{friends}(\textbf{Jesse}, \textbf{Jesse}) & \emph{friends}(\textbf{Jesse} , \textbf{Barack}) & \emph{friends}(\textbf{Barack}, \textbf{Jesse}) \\
+\emph{spouse}(\textbf{Nelson}, \textbf{Sara}) & \emph{spouse}(\textbf{Sara}, \textbf{Nelson}) & \emph{spouse}(\textbf{Sara}, \textbf{Barack}) \\
+\emph{spouse}(\textbf{Nelson}, \textbf{Celine}) & \emph{spouse}(\textbf{Jesse}, \textbf{Barack}) & \emph{spouse}(\textbf{Mitt}, \textbf{Mitt})\\
+\emph{votesFor}(\textbf{Nelson}, \textbf{Jesse}) & \emph{votesFor}(\textbf{Nelson}, \textbf{Barack}) & \emph{votesFor}(\textbf{Mitt},\textbf{Mitt}) \\
+\emph{votesFor}(\textbf{Barack}, \textbf{Nelson}) & \emph{votesFor}(\textbf{Jesse}, \textbf{Barack}) & \emph{votesFor}(\textbf{Jesse}, \textbf{Barack})\\
+\ldots & \ldots & \ldots\\
+\hline
+\end{tabular}
+\end{center}
+
+Each of these ground predicates has a truth value. We assume that we know the truth values (interpretations) for only some of these predicates. In our example we are going to assume that we know that $I\big(\text{\emph{votesFor}}\left(\text{\textbf{Nelson}},\text{\textbf{Barack}}\right)\big) = 0.27$, but are not aware of the truth values of atoms \emph{friends}(\textbf{Jesse}, \textbf{Nelson}) and \emph{votesFor}(\textbf{Jesse}, \textbf{Barack}). 
+
+If we assume that \textbf{Barack} and \textbf{Mitt} are the only candidates for whom one could vote, it follows naturally that any grounding of predicate \emph{\emph{votesFor}} with any other entity as its second argument would be false (i.e. will have value 0). We could use types to avoid these false groundings. For instance in this example we could have used two types \{voter, nominee\} to avoid generating ground predicates like \emph{votesFor}(\textbf{Nelson}, \textbf{Jesse}) or \emph{votesFor}(\textbf{Barack}, \textbf{Nelson}). The same trick could be used to restrict the possible groundings of \emph{spouse}(B,A).
+
+After replacing the predicates in our rules with these ground predicates we will get a number of ground rules. The distance-to-satisfaction of each rule would be a constituent of the probability density function over the set of all interpretations:
+\begin{equation*}
+f(I) = \frac{1}{Z} exp [ - \sum_{r \in R} \lambda_r . d_r(I)]
+\end{equation*}
+
+Note that we have not used the square of distances in our density function. This ensures that the constraints in our final optimization problem would be all linear. Now suppose that we want to find the most likely values for the remaining predicates. These most likely values are values which have the highest joint probability. In other words, replacing these interpretations in function $f$ maximizes the value of this function. Instead of maximizing function $f$, we could minimize the sum $\sum_{r \in R} \lambda_r d_r(I)$. Coming back to our example, let us look at one of the elements of this sum. Suppose that this element corresponds to the following rule $\hat{r}$:
+
+\begin{align*}
+0.3 : \text{\emph{friends}} (\text{\textbf{Jesse}},\text{\textbf{Nelson}}) \land \text{\emph{votesFor}}(\text{\textbf{Nelson}},\text{\textbf{Barack}}) \to \text{\emph{votesFor}}(\text{\textbf{Jesse}},\text{\textbf{Barack}}) \\
+\end{align*}
+
+The element in the above-mentioned sum which corresponds to this ground rule is $0.3 d_{\hat{r}} (I)$. As we said before, we only have the interpretation of \emph{votesFor}(\textbf{Nelson}, \textbf{Barack}) in $I$, and the truth values of \emph{friends}(\textbf{Jesse}, \textbf{Nelson}) and \emph{votesFor}(\textbf{Jesse}, \textbf{Barack}) are to be determined by our optimization problem. So the truth values $I\big(\text{\emph{votesFor}}\left(\text{\textbf{Jesse}},\text{\textbf{Barack}}\right)\big)$ and $I\big(\text{\emph{friends}}\left(\text{\textbf{Jesse}},\text{\textbf{Nelson}}\right)\big)$ will be represented as decision variables $x_1$ and $x_2$ in our optimization problem. 
+
+Now let us see how $d_{\hat{r}}(I)$ will be replaced by these variables. We know that for a rule $r_{\text{body}} \to r_{\text{head}}$, the distance to satisfaction is given by:
+
+\begin{equation*}
+d_r(I) = \max \{ 0, I(r_{\text{body}}) - I(r_{\text{head}}) \}
+\end{equation*} 
+
+$ I(r_{\text{head}}) $ will be replaced by decision variable $x_1$. The head of the rule is a conjunction which could be decomposed further using the following formula:
+
+\begin{equation*}
+l_1 \tilde{\land} l_2 = \max \{ 0, I(l_1) + I(l_2) - 1\}
+\end{equation*}
+
+So the interpretation for head would be equal to:
+
+\begin{equation*}
+\max \{ 0, I \big( \text{\emph{friends}}(\text{\textbf{Jesse}}, \text{\textbf{Nelson}})\big) + I\big(\text{\emph{votesFor}}(\text{\textbf{Nelson}}, \text{\textbf{Barack}})\big) -1 \}
+\end{equation*}
+
+
+We had assumed that we know that the  interpretation for \emph{votesFor}(\textbf{Nelson}, \textbf{Barack}) is 0.27. The ground predicate \emph{friends}(\textbf{Jesse}, \textbf{Nelson}) will be replaced by decision variable $x_2$. So the interpretation for the head equals:
+
+\begin{equation*}
+\max \{ 0, x_2 + 0.27 - 1 \}
+\end{equation*}
+
+Replacing this into the formula for the distance-to-satisfaction of $\hat{r}$ we will have:
+
+\begin{equation*}
+d_{\hat{r}} (I) = \max \{ 0, \max \{ 0 , x_2 + 0.27 - 1 \} - x_1 \}
+\end{equation*}
+
+And this term would be one of the constituents of the sum which composes the objective function of our optimization problem. However, we could trun this term into a linear one, by means of auxiliary variables and constraints. Firs we will replace $\max \{ 0 , x_2 + 0.27 - 1 \}$ with $y_1$. So $d_{\hat{r}} (I)$ is now equal to $\max \{ 0, y_1 - x_1 \}$. But in order to ensure that $ y_1 = \max \{ 0 , x_2 + 0.27 - 1 \}$, we have to add these constraints to our optimization problem:
+
+\begin{align*}
+y_1 & \geq 0 \\
+y_1 & \geq x_2 + 0.27 -1
+\end{align*}
+
+Now we further simplify $d_{\hat{r}} (I)$ by letting $y_2 = \max \{ 0, y_1 - x_1 \}$. This way, $y_2$ would be a single term representing the interpretation for rule $\hat{r}$ in the objective function. To ensure this equality, however, these two constraints have to be added to the problem:
+
+\begin{align*}
+y_2 & \geq 0 \\
+y_2 & \geq y_1 - x_1
+\end{align*}
+
+Now if we do the same procedure for all groundings of all rules, we will have a linear objective function $\left( \sum_{r \in R} \lambda_r d_r (I) \right)$ in which each $d_r (I)$ is replaced by either a constant (if we know the truth value) or a decision variable. There would also be a number of linear constraints, most of them generated as a result of linearization of objective function as wee saw in the previous example. 
+
+Once we have obtained this formulation, it is easy to formulate the case in which the density function is composed of squared distances. In this case, we want to minimize $\sum_{r \in R} \lambda_r \left(d_r(I)\right)^2$. If we replace the unknown distances $d_{r_j} (I)$ with decision variables $y_j$ in a fashion similar to what we observed in previous example, the objective function would be $\sum_{j \in J} \lambda_j (y_j)^2$. However, this objective function is not linear anymore, and could not be solved by LP solvers. The trick is to convert this problem into a Second-Order Cone Program (also known as Quadratically Constrained Quadratic Program). The only difference between SOCP and LP is that constraints of the following type are also allowed in SOCP:
+
+\begin{equation*}
+x_i x_j \geq c_1 x_1^2 + \dots + c_n x_n^2
+\end{equation*}
+
+To convert our problem into an SOCP program, we simply replace the objective function $\sum_{j \in J} \lambda_j (y_j)^2$ with a single variable $z$ and add the following one constraint to ensure that optimal value of $z$ would be equal to the previous objective function:
+
+\begin{equation*}
+z^2 \geq \sum_{j \in J} \lambda_j (y_j)^2
+\end{equation*}
+
+Since all other constraints are linear, and this last constraint is allowed in SOCP, we could use any SOCP (also known as QCQP) solver to compute the optimal value for this optimization problem. 
+
+\end{document}
