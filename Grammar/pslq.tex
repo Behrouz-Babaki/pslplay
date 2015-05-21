@@ -1,0 +1,73 @@
+\documentclass[12pt]{article} 
+
+\usepackage{syntax}
+
+\begin{document}
+\title{$\mathit{PSL}^{Q}$ Grammar}
+\date{}
+\maketitle
+
+\paragraph{Syntax Notation}
+\begin{itemize}
+\item Non-terminals are written between angle brackets,
+  e.g. $\langle\mathit{formula}\rangle$.
+\item Terminals are written in fixed-width font enclosed in quotation
+  signs, e.g. `\verb+Q+'.
+\item Regular expressions are written in fixed-width font, e.g. \verb#[0-9]+#.
+\item Optional items are written in square brackets, e.g. $[$
+  \verb#0+# $]$.
+\item Non-empty lists are written with an item, followed by a
+  separator and ``\ldots'' , e.g. $\langle \mathit{rule} \rangle$ `\verb#;#' \ldots 
+
+\end{itemize}
+
+\paragraph{Grammar Definition}
+
+\begin{grammar}
+
+  <program> ::= <rule> `;' \ldots
+  
+  % <rules> ::= <rules> <rule>
+  % \alt <rule>
+
+  <rule> ::= <weight> `:' <conj_formula> `=>' <disj_formula>
+
+  <weight> ::= \verb#[0-9]+# $[$ `.' \verb#[0-9]+# $]$
+  
+  <conj_formula> ::= <formula>
+  \alt <conj_formula> `\&' <formula>
+
+  <disj_formula> ::= <formula>
+  \alt <disj_formula> `|' <formula>
+
+  <formula> ::= <predicate>
+  \alt <quantifier_expr>
+  \alt <constant_value>
+  \alt `(' <formula> `)'
+  \alt `~' <formula>
+
+  <predicate> ::= <predicate_symbol> `(' <term> `,' \ldots `)'
+
+  <predicate_symbol> ::= \verb#[a-zA-Z][a-zA-Z0-9_]*#
+
+  <term> ::= <variable_name> 
+  \alt <constant_term>
+
+  <variable_name> ::= \verb#[A-Z][a-zA-Z0-9_]*#
+  
+  <constant_term> ::= \verb#[a-z][a-zA-Z0-9_]*#
+
+  <quantifier_expr> ::= `Q' `(' <variable_name> `,' <formula> `,' <formula> `)'
+
+  <constant_value> ::= \verb#0+# $[$ `.' \verb#[0-9]+# $]$ 
+  \alt $[$ \verb#0+# $]$ `1' $[$ `.' \verb#0+# $]$
+  
+\end{grammar}
+
+Since the symbol `\verb#Q#' is reserved for quantifier expressions, a predicate
+symbol can not be the symbol `\verb+Q+'.
+
+
+
+
+\end{document}
