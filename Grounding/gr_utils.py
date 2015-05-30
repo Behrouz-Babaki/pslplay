@@ -103,3 +103,47 @@ class Math_prob:
         self.solutions.clear()
         for variable in problem.variables():
             self.solutions[int(variable.name)] = variable.varValue
+
+
+
+
+def read_trust_data(p_fname, k_fname, t_fname, problem, separator=','):
+    people_rel = dict()
+    with open(p_fname) as people_file:
+        people_file.readline()
+        for line in people_file:
+            line = line.strip().split(',')
+            current_tuple = [int(line[0]), line[1]]
+            people_rel[current_tuple[0]] = current_tuple[1]
+            
+    knows_rel = dict()
+    with open(k_fname) as knows_file:
+        knows_file.readline()
+        for line in knows_file:
+            line = line.strip().split(',')
+            current_tuple = [int(line[0]), int(line[1]), float(line[2])]
+            knows_rel[(current_tuple[0], current_tuple[1])] = (True, current_tuple[2])
+            
+    for person1 in people_rel:
+        for person2 in people_rel:
+            current_tuple = (person1, person2)
+            if not current_tuple in knows_rel:
+                knows_rel[current_tuple] = (False, problem.add_var())
+                
+    trusts_rel = dict()
+    with open(t_fname) as knows_file:
+        knows_file.readline()
+        for line in knows_file:
+            line = line.strip().split(',')
+            current_tuple = [int(line[0]), int(line[1]), float(line[2])]
+            trusts_rel[(current_tuple[0], current_tuple[1])] = (True, current_tuple[2])
+    
+    for person1 in people_rel:
+        for person2 in people_rel:
+            current_tuple = (person1, person2)
+            if not current_tuple in trusts_rel:
+                trusts_rel[current_tuple] = (False, problem.add_var())
+    return people_rel, knows_rel, trusts_rel
+
+if __name__ == '__main__':
+	exit(1)
