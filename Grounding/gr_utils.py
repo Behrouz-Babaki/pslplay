@@ -1,19 +1,21 @@
 from __future__ import print_function
 
-def read_trust_data(p_fname, k_fname, t_fname, problem, separator=','):
+def read_trust_data(p_fname, k_fname, t_fname, problem, separator=',', drop_header=True):
     people_rel = dict()
     with open(p_fname) as people_file:
-        people_file.readline()
+	if drop_header:
+	        people_file.readline()
         for line in people_file:
-            line = line.strip().split(',')
+            line = line.strip().split(separator)
             current_tuple = [int(line[0]), line[1]]
             people_rel[current_tuple[0]] = current_tuple[1]
             
     knows_rel = dict()
     with open(k_fname) as knows_file:
-        knows_file.readline()
+	if drop_header:
+	        knows_file.readline()
         for line in knows_file:
-            line = line.strip().split(',')
+            line = line.strip().split(separator)
             current_tuple = [int(line[0]), int(line[1]), float(line[2])]
             knows_rel[(current_tuple[0], current_tuple[1])] = (True, current_tuple[2])
             
@@ -25,9 +27,10 @@ def read_trust_data(p_fname, k_fname, t_fname, problem, separator=','):
                 
     trusts_rel = dict()
     with open(t_fname) as knows_file:
-        knows_file.readline()
+	if drop_header:
+	        knows_file.readline()
         for line in knows_file:
-            line = line.strip().split(',')
+            line = line.strip().split(separator)
             current_tuple = [int(line[0]), int(line[1]), float(line[2])]
             trusts_rel[(current_tuple[0], current_tuple[1])] = (True, current_tuple[2])
     
