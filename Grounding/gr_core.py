@@ -128,16 +128,21 @@ def psl_rule(problem, body, head, body_neg_stat, head_neg_stat):
     for i in range(len(body)):
         isconst, val = body[i]
         if isconst:
-            if body_neg_stat:
+            if body_neg_stat[i]:
                 const_part -= val
             else:
                 const_part -= (1-val)
         else:
-            var_ids.append(val)
-            if body_neg_stat:
-                coefs.append(-1)
+            if val in var_ids:
+                var_index = var_ids.index(val)
             else:
-                coefs.append(1)
+                var_ids.append(val)
+                coefs.append(0)
+                var_index = len(var_ids)-1
+            if body_neg_stat[i]:
+                coefs[var_index] -= 1
+            else:
+                coefs[var_index] += 1
                 const_part -= 1
     problem.add_linear_constraint(var_ids, coefs, const_part)  
     return (False,y)
