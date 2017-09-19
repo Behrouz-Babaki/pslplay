@@ -1,0 +1,63 @@
+Tutorial on how to document code and create layouts with Sphinx.
+================================================================
+
+1. Installing Sphinx
+==================== 
+To be able generate the html files you need to install two packages.
+The first one being sphinx itself
+    >>> pip install sphinx 
+    or 
+    >>> easy_install -U sphinx
+
+The second package is used for the bootstrap layout.
+    >>> pip install sphinx_bootstrap_theme
+
+The GitHub repository of the second package can be found here : 
+https://github.com/ryan-roemer/sphinx-bootstrap-theme
+
+Once you have installed all necessary files you will be able to run
+    >>> make html 
+
+in the ../Docs folder to generate the html files from the source. 
+
+The project already as all necessary files generated, but if you want to create your own root folder with new source files you may want to run 
+    >>> sphinx-quickstart
+
+in the folder of your choice. 
+This will generate the necessary files to start your documentation as well as the conf.py, which contains some options to customize the layout and style.
+
+2. Documenting with Sphinx
+==========================
+
+Python code can be documented with the standard docstrings inside the functions.
+Examples for a sphinx documentation in python can be found in examples/symLPExperiments.py
+
+Once you have commented your code you can piece together the snippets by creating or editing a *.rst file in the Docs/source/.. folder.
+Sphinx uses a markup language for formatting and documenting. Examples for such can be found in introduction.rst and code.rst.
+
+Further customization can be made by creating your own html files which extend the standard ones. To do this just create and html file in the Docs/source/_templates folder and let sphinx know, which class you want to extend. Again an example on how to do this can be found in the _templates folder. 
+
+A full code example for Sphinx can be found here : 
+
+https://pythonhosted.org/an_example_pypi_project/sphinx.html#full-code-example 
+
+Sphinx uses autodoc to automatically extract all docstrings from a module and display them in their respective html document / rst file.
+Normally one would use the following syntax
+    .. automodule:: symLPExperiments
+        :members:
+
+which would extract all docstrings from the specified module and display it. 
+Sphinx also allows manual documentation and single function documentation. For more information see 
+
+http://sphinx-doc.org/ext/autodoc.html
+http://sphinx-doc.org/domains.html (especially for CPP)
+
+3. Configuration 
+================
+
+If you want to create new folders for source code you will need to tell Sphinx where to find the code if you want to reference it for documentation. This can be done by editing the conf.py in the Docs/sources/ folder. Just add the path for the new code to the sys.path by making it an absolute path relative to the root directory.
+
+
+For more information about Sphinx and the formatting please see : 
+
+http://sphinx-doc.org/tutorial.html

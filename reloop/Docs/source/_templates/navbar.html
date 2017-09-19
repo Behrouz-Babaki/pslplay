@@ -1,0 +1,66 @@
+<div class="header">
+    <nav class="navbar">
+        <div class="container">
+
+
+              <ul class="nav navbar-nav">
+                {% if theme_navbar_links %}
+                  {%- for link in theme_navbar_links %}
+                    <li><a href="{{ pathto(*link[1:]) }}">{{ link[0] }}</a></li>
+                  {%- endfor %}
+                {% endif %}
+                {% block navbartoc %}
+                  {% include "globaltoc.html" %}
+                  {% if theme_navbar_pagenav %}
+                    {% include "navbartoc.html" %}
+                  {% endif %}
+                {% endblock %}
+                {% if theme_navbar_sidebarrel %}
+                  {% block sidebarrel %}
+                    {% include "relations.html" %}
+                  {% endblock %}
+                {% endif %}
+                {% block navbarextra %}
+                {% endblock %}
+                {% if theme_source_link_position == "nav" %}
+                  <li class="hidden-sm">{% include "sourcelink.html" %}</li>
+                {% endif %}
+              </ul>
+
+              {% block navbarsearch %}
+                {% include "navbarsearchbox.html" %}
+              {% endblock %}
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.html#team">About</a></li>
+                <li><a href="http://www-ai.cs.uni-dortmund.de/weblab/index.html">Weblab</a></li>
+            </ul>
+        </div>
+
+    </nav>
+</div>
+
+<!--div id="navbar" class="{{ theme_navbar_class }} navbar-default {% if theme_navbar_fixed_top|tobool -%} navbar-fixed-top{%- endif -%}">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <!--button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://www-ai.cs.uni-dortmund.de/weblab/index.html">
+          {%- block sidebarlogo %}
+            {%- if logo %}<img class="intro-logo" src="{{ pathto('_static/' + logo, 1) }}">{%- endif %}
+          {%- endblock %}
+        </a>
+        <span class="navbar-text navbar-ls8-title">
+          {% if theme_navbar_title -%}{{ theme_navbar_title|e }}{%- else -%}{{ project|e }}{%- endif -%}
+          <span class="navbar-version"><b> ({{ version|e }})</b></span>
+        </span>
+      </div>
+
+
+    </div>
+</div-->

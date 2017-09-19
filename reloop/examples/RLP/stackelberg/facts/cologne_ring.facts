@@ -1,0 +1,52 @@
+# ring
++edge(12,10)
++edge(10,8)
++edge(8,6)
++edge(6,4)
++edge(4,2)
++edge(4,2)
++edge(2,35)
++edge(35,32)
++edge(32,30)
++edge(30,28)
++edge(28,27)
++edge(27,26)
++edge(26,25)
++edge(25,19)
++edge(19,17)
++edge(17,14)
++edge(14,12)
+
+# inflow
++edge(18,19)
++edge(16,17)
++edge(14,15)
++edge(12,13)
++edge(10,11)
++edge(9,8)
++edge(7,6)
++edge(5,4)
++edge(1,2)
++edge(34,35)
++edge(32,33)
++edge(31,30)
++edge(28,29)
+
+# shortcut
++edge(25,28)
+
+# spokes
++edge(17,23)
++edge(12,23)
++edge(8,23)
++edge(6,23)
++edge(32,23)
++edge(30,23)
++edge(28,23)
++edge(25,23)
+
+# blocking set
++resources(5)
+
+
+

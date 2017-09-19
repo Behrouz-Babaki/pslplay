@@ -1,0 +1,139 @@
+
+a, a:hover, a:visited, a:focus {
+    text-decoration: none;
+}
+
+.banner {
+    color: #d12f58;
+    font-size: 30px;
+    margin: 30px 0px 60px 0px;
+        
+}
+
+.wrapper {
+    text-align: center;
+}
+
+.reloop-logo {
+    padding: 30px 30px;
+}
+
+.feature-green {
+    background-color: #B9DC31;
+}
+.feature {
+    padding: 30px 30px;
+    color: #5D5D5E;
+    font-size: 16px;
+}
+
+.header {
+
+    font-size: 14px;
+    color: rgba(209, 47, 88, 0.74);
+    background-color: #ECECEC;
+}
+
+
+
+nav li {
+    display: inline;
+    list-style: none;
+    padding-right: 45px;
+}
+
+nav li a, nav li a:hover, nav li a:visited {
+    color: rgba(209, 47, 88, 0.74);
+}
+
+nav ul :not(:first-child) a:hover {
+    background-color: #F2F2F2 !important;
+}
+
+nav ul.nav:first-of-type >:first-child a, 
+nav ul.nav:first-of-type >:first-child a:hover { 
+    font-size: 18px;
+    background-color:  #ECECEC !important;
+}
+
+
+nav ul {
+    margin: 10px 10px;
+}
+
+.btn-outline-inverse {
+    border: 1px solid #fff;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 0px;
+}
+.btn-outline-inverse:hover, 
+.btn-outline-inverse:focus { 
+    background-color: #fff;
+    color: #B9DC31;
+}
+
+.feature-dark-green { 
+    background-color: #98BA13;
+    padding: 10px 10px;
+}
+
+.newsletter-email {
+    border-color: #B9DC31;
+    border-radius: 0px;
+    font: 300 18px/30px 'Open Sans';
+    color: black;
+    width: 70%;
+    float: left;
+    height: 42px;
+}
+
+.feature-gray {
+    background-color: #ccc;
+
+}
+
+.about-img {
+    width: 150px;
+    height: 150px;
+    margin-top: 30px;
+}
+
+.about-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 20px
+}
+.about-text {
+    font-size: 14px:
+}
+
+pre {
+    text-align: left;
+}
+
+.maxflow {
+    text-align: left;
+}
+
+.feature-list {
+    list-style: none;
+    padding: 40px;
+}
+.feature-list li {
+    padding: 5px 0px;
+}
+
+.feature-red {
+    background-color: #d12f58;
+    color: #fff;
+}
+
+.feature-red h2 {
+    padding-bottom: 30px;
+}
+
+.feature-light-gray { 
+    background-color: #ECECEC;
+) 
+    

@@ -1,0 +1,160 @@
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+
+    <div class="banner center-block">
+        <div class="container">
+            <img class="center-block reloop-logo" alt="reloop" src="_static/img/reloop.svg"></img>
+        </div>
+        <p>
+        The Framework for Relational Convex Optimization
+        </p>
+    </div>
+
+    <div class="feature feature-green">
+        <a href="download.html" class="btn btn-lg btn-outline-inverse">Download Reloop</a>
+        <a href="tutorial.html" class="btn btn-lg btn-outline-inverse">Check the Tutorial</a>
+    </div>
+
+    <div class="feature feature-dark-green">
+        <div class="container">
+            <div class="col-md-7 col-md-offset-3">
+                <!--input type="text" class="form-control newsletter-email" type="email" placeholder="email address"/>
+                <a href="#" class="btn btn-md btn-outline-inverse">Subscribe</a-->
+            </div>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="container">
+            <div class="col-md-4">
+                <h2>Powerful language RLP</h2>
+                <span> RLP aims to bridge the gap between powerful relational reasoning tools and efficient numerical optimization algorithms in a hassle-free way. Its Python integration gives the user the full flexibility of an imperative language.
+                </span> 
+            </div> 
+            <div class="col-md-4">
+                <h2>Lifted Optimization</h2>
+                <span> We provide interfaces to popular open source convex solvers such as CVXOPT and glpk as well as  commercial packages -- gurobi and cplex. All solver interfaces support efficient model reduction/symmetry compression.      
+                </span> 
+            </div>    
+            <div class="col-md-4">
+                <h2>Bring your own tools</h2>
+                <span>
+                    We provide ready-to-use interfaces to PyDatalog, PostgreSQL and Prolog and various convex solvers. But integrating your own knowledge base/solver is not hard. Reloop is easily extendable and growing!
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature feature-gray">
+        <div class="container">
+            <div class="col-md-6">
+                <div class="maxflow">
+                    <h2> A simple MaxFlow example </h2>
+                        <ul class="feature-list">
+                            <li>
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  Define your model only once
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  Use symbolic mathematics
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>  Plugin the Logical Knowledge Base of your choice
+                            </li>
+                </div>
+                <div class="math">
+\[\begin{split}\operatorname*{maximize}\limits_{{\bf f} \in \mathbb{R}^{|E|}}  &amp;\quad \sum_{v: (s,v)\in E} f_{sv} \\
+\text{s.t.} &amp;\quad \forall v\in V\setminus \{s, t\} : \sum\nolimits_{u: (u,v) \in E} f_{uv} = \sum\nolimits_{u: (v,u) \in E} f_{vu} \;,\\
+&amp; \quad \forall e \in E: \quad 0 \leq f_e \leq c_e\;.\end{split}\]
+                </div>
+            </div>
+            <div class="col-md-6">
+                <pre class="prettyprint linenums">
+flow = numeric_predicate("flow", 2)
+cost = numeric_predicate("cost", 2)
+
+model.add_reloop_variable(flow)
+
+source = boolean_predicate("source", 1)
+target = boolean_predicate("target", 1)
+edge = boolean_predicate("edge", 2)
+node = boolean_predicate("node", 1)
+
+model += RlpSum([X, Y], source(X) & edge(X, Y), flow(X, Y))
+
+outFlow = RlpSum([X, ], edge(X, Z), flow(X, Z))
+inFlow = RlpSum([Y, ], edge(Z, Y), flow(Z, Y))
+
+model += ForAll([Z, ], node(Z) & ~source(Z) & ~target(Z), inFlow |eq| outFlow)
+
+model += ForAll([X, Y], edge(X, Y), flow(X, Y) |ge| 0)
+model += ForAll([X, Y], edge(X, Y), flow(X, Y) |le| cost(X, Y))
+                </pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature">
+        <div class="container">
+            <div class="row">
+                <div class="about-us"><a name="team"></a>
+                   <h2>Meet the Reloop team</h2>
+                    Reloop is developed at the chair for Articial Intelligence (Chair 8) at TU Dortmund University
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="_static/img/kk.jpg" class="img-circle about-img"></img>
+                    <div class="about-name">Prof. Dr. Kristian Kersting </div>
+                    <div class="about-text">
+                        is the <a href="http://www-ai.cs.uni-dortmund.de/PERSONAL/kersting.html">head</a> of the Data Mining group at Chair 8. His research interests are data mining, machine learning, and statistical relational AI.  </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="_static/img/mm.jpg" class="img-circle about-img"></img>
+                    <div class="about-name">Martin Mladenov</div>
+                    <div class="about-text">
+                        is a <a href="http://www-ai.cs.uni-dortmund.de/PERSONAL/mladenov.html">PhD student</a> at Chair 8. His research interests are based around symmetry, relational algebraic languages and convex optimization.</div>
+                </div>
+                <div class="col-md-6">
+                    <img src="_static/img/dh.jpg" class="img-circle about-img"></img>
+                    <div class="about-name">Danny Heinrich </div>
+                    <div class="about-text">
+                        is a Bachelor Student at TU Dortmund University and is, as a student research assistant, part of the Data Mining group at Chair 8.</div>
+                </div>
+                <div class="col-md-6">
+                    <img src="_static/img/lk.jpg" class="img-circle about-img"></img>
+                    <div class="about-name">Leonard Kleinhans</div>
+                    <div class="about-text">
+                        is a Bachelor Student at TU Dortmund University and is, as a student research assistant, part of the Data Mining group at Chair 8.</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="feature feature-red">
+        <div class="container">
+            <h2> Reloop is Open Source </h2>
+            <a href="https://bitbucket.org/reloopdev/reloop" class="btn btn-large btn-outline-inverse">View on bitbucket</a>
+        </div>
+    </div>
+    <div class="feature feature-light-gray">
+        <div class="container">
+            <h2> Acknowledgments </h2>
+            <p>The research presented was partly supported by the Fraunhofer ATTRACT fellowship STREAM, by the EC under contract number FP-248258-First-MM, by the German-Israeli Foundation (GIF) for Scientific Research and Development, 1180-218.6/2011, and by the German Science Foundation (DFG), KE 1686/2-1. </p>
+        </div>
+    </div>
+</div>
+<script src="_static/js/prettify.js"></script>
+<script type="text/javascript">
+  !function ($) {
+    $(function(){
+      window.prettyPrint && prettyPrint()
+    })
+  }(window.jQuery)
+</script>
+
+<div class="container" style="visibility:hidden">
+      <div class="row">
+        <div class="col-md-12">

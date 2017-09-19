@@ -1,0 +1,8 @@
+build/*
+Docs/build/*
+*.o
+*.so
+*.pyc
+
+.DS_Store
+.idea/
